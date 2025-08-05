@@ -49,6 +49,7 @@ Result: no seed phrase, no private key stored, zero leakage.
 
 ## 🧱 Project Structure
 
+---
 
 repeater_chain/
 │
@@ -129,3 +130,5 @@ repeater_chain/
 ├── go.mod # Go module definition
 ├── Makefile # Auto build for Rust/Go
 └── .gitignore
+
+---
