@@ -1,4 +1,5 @@
 async def ai_bft_consensus(tx_bundle):
+    
     local_score = validator_ai.engine.hybrid_validation(tx_bundle)
     
     scores = await network.broadcast_score(tx_bundle.id, local_score)
