@@ -1,7 +1,3 @@
-from pathlib import Path
-
-# === FILE 1: README.md ===
-readme_en = """
 # 🔁 Repeater Chain
 
 Repeater Chain is a next-generation blockchain protocol based on **DAG** (Directed Acyclic Graph) and **autonomous AI validation**, built for ultra-fast throughput, zero human validators, and mathematically structured consensus.
