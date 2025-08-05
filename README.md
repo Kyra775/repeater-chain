@@ -1,6 +1,6 @@
 from pathlib import Path
 
-# === FILE 1: README.md (English) ===
+# === FILE 1: README.md ===
 readme_en = """
 # 🔁 Repeater Chain
 
@@ -48,6 +48,7 @@ Result: no seed phrase, no private key stored, zero leakage.
 ---
 
 ## 🧱 Project Structure
+
 
 repeater_chain/
 │
