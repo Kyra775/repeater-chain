@@ -49,8 +49,6 @@ Result: no seed phrase, no private key stored, zero leakage.
 
 ## 🧱 Project Structure
 
----
-
 repeater_chain/
 │
 ├── core/ # Core blockchain logic
