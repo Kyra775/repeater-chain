@@ -1,47 +1,54 @@
-# 🔁 Repeater Chain
+# Repeater Chain
 
-Repeater Chain is a next-generation blockchain protocol based on **DAG** (Directed Acyclic Graph) and **autonomous AI validation**, built for ultra-fast throughput, zero human validators, and mathematically structured consensus.
-
----
-
-## ⚙️ Key Features
-
-| Feature                   | Description                                                                 |
-|--------------------------|-----------------------------------------------------------------------------|
-| ⚡ DAG Hashgraph          | Parallel and efficient structure for transaction blocks                     |
-| 🤖 AI Validator           | Autonomous node validator with ML + rule engine hybrid                     |
-| 🔐 Hash-Based Login       | Wallet access via password → hash → authentication                          |
-| 🧠 AI-enhanced PBFT       | Byzantine consensus guided by AI confidence scoring                        |
-| 🧬 zk-SNARK Compression   | Compact transaction format using zero-knowledge proof logic                |
-| 🔄 WASM Smart Contracts   | Ultra-light execution with WebAssembly + AI opcodes                        |
-| 🌐 Dynamic P2P Network    | Libp2p-like protocol with IP rotation and NTRU encryption                  |
+**Repeater Chain** is a next-generation blockchain protocol designed to achieve efficiency, scalability, and security by combining **DAG structures**, **AI-powered validators**, and **mathematical optimization**. Unlike traditional blockchain architectures, Repeater Chain introduces a revolutionary approach for high-speed, low-cost, and secure decentralized networks.
 
 ---
 
-## 🔬 Mathematical Design
+## 🔧 **Core Concepts**
 
-The project treats data not as bytes, but as dynamic structures. Each change in user state generates a new block (not mutation), which:
+### 1. ✅ Directed Acyclic Graph (DAG), Not Linear Chains
+Repeater Chain utilizes a **Directed Acyclic Graph (DAG)** structure instead of a linear blockchain, allowing parallel transaction execution.
 
-- Forms a DAG instead of linear chain
-- Limits active blocks to N (default: 10)
-- Ensures compressed + verifiable transitions
-- Prevents double spending and ensures rollback-free consensus
+### 2. 🧠 AI-Powered Automatic Validators
+AI validators replace traditional mining or staking mechanisms, providing efficient and secure transaction validation.
 
-### Hash-Login System
-
-A user password (e.g. `admin123`) is hashed once (SHA3_256) → becomes private key.  
-The hash of that hash (double hash) is stored and used to verify login.  
-Result: no seed phrase, no private key stored, zero leakage.
+### 3. 🧬 Compact Block Structure
+Blocks are optimized to reduce storage and bandwidth requirements using zk-SNARK compression.
 
 ---
 
-## 🧠 AI Validator Mechanism
+## 🚀 **Key Features**
 
-- **Model**: TensorFlow Lite (for edge performance)
-- **Detection**: Anomaly scoring, transaction abuse, DDoS patterns
-- **Reputation**: Each node carries a confidence weight, trained and penalized
+| Feature                   | Description                                     |
+|--------------------------|-------------------------------------------------|
+| ⚡ DAG Hashgraph          | Parallel and efficient transaction structures   |
+| 🤖 AI Validator           | Autonomous node validator using AI              |
+| 🔐 Hash-Based Login       | Secure wallet authentication via password hash |
+| 🧬 zk-SNARK Compression   | Compact transaction format                      |
 
 ---
 
-## 🧱 Project Structure
+## 📂 **Project Structure**
 
+```
+repeater_chain/
+├── core/                                # Core blockchain logic
+├── validator_ai/                        # AI Validator Engine
+├── network/                             # Node communication and networking
+├── runtime/                             # Smart contract and transaction execution
+├── data/                                # Chain and pending transaction data
+├── crypto_core/                         # Security and cryptography modules
+├── utils/                               # Utility functions and helpers
+├── api/                                 # API interfaces
+├── cli/                                 # Command-line interface tools
+├── smart_contract/                      # WASM smart contract examples
+├── tests/                               # Unit tests
+├── docs/                                # Documentation
+└── requirements.txt                     # Python dependencies
+```
+
+---
+
+## 💡 **Why Repeater Chain?**
+
+Repeater Chain provides scalability, speed, and security by addressing the limitations of legacy blockchain systems. It combines cutting-edge technologies such as DAG structures, AI validators, and zk-SNARK compression to create an efficient and secure decentralized network.
