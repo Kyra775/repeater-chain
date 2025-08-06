@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-// Output: private_key (64 bytes) dan public_key (32 bytes)
+// Output: private_key (64 bytes) public_key (32 bytes)
 void password_to_keypair(const char *password, unsigned char *public_key, unsigned char *private_key) {
     unsigned char seed[crypto_generichash_BYTES];
     
