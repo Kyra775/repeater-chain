@@ -2,7 +2,12 @@ import tensorflow.lite as tflite
 import numpy as np
 import hashlib
 import time
-from .model import load_model
+import json
+import threading
+from pathlib import Path
+from validator_ai.model import load_model
+from utils.crypto import verify_signature
+from utils.logger import secure_log
 
 class RuleEngine:
     def check_basic_rules(self, tx):
@@ -28,29 +33,42 @@ class RuleEngine:
     def _verify_signature(self, tx):
         try:
             payload = f"{tx.sender}:{tx.receiver}:{tx.amount}:{tx.timestamp}".encode()
-            expected_sig = hashlib.sha256(payload).hexdigest()
-            return expected_sig == tx.signature
-        except:
+            return verify_signature(payload, tx.signature, tx.sender)
+        except Exception:
             return False
 
 class AIValidator:
-    def __init__(self, model_path, threshold=0.7):
+    def __init__(self, model_path, thresholds=None):
         self.model = load_model(model_path)
         self.rule_engine = RuleEngine()
-        self.threshold = threshold
+        self.thresholds = thresholds or {
+            "reject": 0.4,
+            "suspicious": 0.7
+        }
+        self.log_path = Path("logs/ai_suspicious.log")
+        self.log_path.parent.mkdir(exist_ok=True)
+        self.lock = threading.Lock()
 
     def validate_transaction(self, tx):
         if not self.rule_engine.check_basic_rules(tx):
-            return 0.0
+            return 0.0, "basic_rule_failed"
 
         input_tensor = self._prepare_input(tx)
         self.model.set_tensor(self.model.get_input_details()[0]['index'], input_tensor)
         self.model.invoke()
-        output = self.model.get_tensor(self.model.get_output_details()[0]['index'])[0]
-        score = float(1.0 - output[0])
-        if score < self.threshold:
-            self._handle_suspicious(tx, score)
-        return score
+        output_tensor = self.model.get_tensor(self.model.get_output_details()[0]['index'])[0]
+
+        score = float(1.0 - output_tensor[0])  # inverse of anomaly
+
+        if score < self.thresholds["reject"]:
+            self._log(tx, score, "REJECTED")
+            return score, "rejected"
+
+        if score < self.thresholds["suspicious"]:
+            self._log(tx, score, "FLAGGED")
+            return score, "flagged"
+
+        return score, "accepted"
 
     def _prepare_input(self, tx):
         features = [
@@ -62,13 +80,15 @@ class AIValidator:
         ]
         return np.array([features], dtype=np.float32)
 
-    def _handle_suspicious(self, tx, score):
-        log_data = {
-            "sender": tx.sender,
-            "receiver": tx.receiver,
-            "amount": tx.amount,
-            "timestamp": tx.timestamp,
-            "score": score
-        }
-        with open("suspicious_tx.log", "a") as f:
-            f.write(str(log_data) + "\n")
+    def _log(self, tx, score, label):
+        with self.lock:
+            log_entry = {
+                "timestamp": time.time(),
+                "tx_id": getattr(tx, 'tx_id', None),
+                "sender": tx.sender,
+                "receiver": tx.receiver,
+                "amount": tx.amount,
+                "score": score,
+                "status": label
+            }
+            secure_log(self.log_path, json.dumps(log_entry))
