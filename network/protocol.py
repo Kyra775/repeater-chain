@@ -9,6 +9,9 @@ from utils.crypto import generate_rsa_keypair
 from utils.blacklist import IPBlacklist
 from utils.geoip import GeoIPValidator
 from utils.logger import log
+from crypto_core import ffi_loader
+from network.bindings.peer_bridge import GoPeerDiscovery
+from runtime.executor import WASMValidator
 
 class IPRotationProtocol:
     def __init__(self, node, tor_port: int = 9050):
